@@ -10,14 +10,16 @@ git add .           # stage all changes in current directory
 ## `git commit`
 Saves staged changes to your local repo.
 ```bash
-git commit -m "Describe changes"   # -m option for including a message 
-git commit file.txt -m "Describe changes" # add a specific file/files and commit
+git commit -m "Describe changes"   # -m option for including a message
 ``` 
 
 ## `git push`
 Uploads commits to current branch of remote repo.
 ```bash
 git push
+
+# to push a branch to remote repo
+git push origin feature-branch
 ``` 
 
 ## `git pull`
@@ -59,10 +61,12 @@ git pull
 # create feature branch and switch to it
 git checkout -b feature-branch
 
-# 
+# after making changes add files and commit
 git add file1.txt file2.txt
 git commit -m "Implemented feature X"
+
+# push branch to the remote repo 
+# **if you have already done this just run git push to push new commits to the feature-branch
 git push origin feature-branch
-git checkout main
 ```
 After all of this you should create a Pull Request on github for others to review.
