@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from firebase.firebase import get_current_firebase_user, get_current_firebase_uid, db
+from fastapi import Header
 
 app = FastAPI()
 
@@ -10,6 +12,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+async def read_root():
+    return {"message": "Hello World"}
 
 if __name__ == "__main__":
     import uvicorn

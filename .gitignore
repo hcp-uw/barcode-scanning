@@ -44,3 +44,4 @@ yarn-error.*
 # backend
 */venv/
 **/__pycache__/
+allerive-auth-firebase-adminsdk-fbsvc-040698cc1c.json
