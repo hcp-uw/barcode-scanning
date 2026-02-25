@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import LoginScreen from './LoginScreen';
+import AuthProvider, { useAuth } from "./contexts/AuthContext";
+import { AppLayout } from "./_layout"
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <LoginScreen />
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <AppLayout/>
+
+    </AuthProvider>
   );
 }
 

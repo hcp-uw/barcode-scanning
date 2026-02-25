@@ -6,67 +6,12 @@ import { makeRedirectUri, ResponseType } from "expo-auth-session";
 
 import { auth } from "./firebase";
 import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import { useAuth } from "./contexts/AuthContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  // Configure the redirect URI for web
-  const redirectUri = makeRedirectUri({
-    scheme: 'frontend',
-    path: 'redirect'
-  });
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    // Web client ID from Google Cloud Console
-    webClientId: "923252135141-an9veump6lv2d1l99pgef77bu876v5if.apps.googleusercontent.com",
-    // iOS client ID (optional, if you have one)
-    iosClientId: "YOUR_IOS_CLIENT_ID.apps.googleusercontent.com",
-    // Android client ID (optional, if you have one)  
-    androidClientId: "YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com",
-    // Scopes for the permissions you need
-    scopes: ['profile', 'email'],
-    responseType: ResponseType.IdToken,
-    // Redirect URI
-    redirectUri: redirectUri,
-  });
-
-  useEffect(() => {
-    if (response?.type === "success") {
-      setLoading(true);
-      const { id_token, access_token } = response.params;
-
-      // Use the ID token to sign in to Firebase
-      const credential = GoogleAuthProvider.credential(id_token);
-      
-      signInWithCredential(auth, credential)
-        .then((userCredential) => {
-          setUser(userCredential.user);
-          Alert.alert("Success", `Welcome ${userCredential.user.email}!`);
-        })
-        .catch((error) => {
-          console.error("Firebase sign-in error:", error);
-          Alert.alert("Error", `Failed to sign in: ${error.message}`);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else if (response?.type === "error") {
-      Alert.alert("Error", "Authentication failed. Please try again.");
-      console.error("Auth error:", response.error);
-    }
-  }, [response]);
-
-  const handleGoogleSignIn = () => {
-    if (!request) {
-      Alert.alert("Error", "Google Sign-In is not ready yet. Please wait.");
-      return;
-    }
-    promptAsync();
-  };
-
+  const auth = useAuth();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Barcode Scanning App</Text>
@@ -81,7 +26,7 @@ export default function LoginScreen() {
           <Text style={styles.subtitle}>Sign in to continue</Text>
           <Button 
             title={loading ? "Signing in..." : "Sign in with Google"} 
-            onPress={handleGoogleSignIn}
+            onPress={auth.handleSignInWithGoogle}
             disabled={!request || loading}
           />
         </>
