@@ -1,4 +1,4 @@
-import { View, Button, Text, StyleSheet, Alert } from "react-native";
+import { View, Button, Text, StyleSheet } from "react-native";
 
 import { useAuth } from "./contexts/AuthContext";
 
