@@ -1,4 +1,4 @@
-from db.firebase import db
+from firebase.firebase import db
 from fastapi import HTTPException
 
 def get_user_profile(uid: str) -> dict:
