@@ -9,4 +9,4 @@ class AllergenDerivativesResponse(BaseModel):
 
 class AllergenAnalysisResponse(BaseModel):
     allergens: Dict[str, List[str]]
-    risk_level: str = "low"  # Post-MVP
+    # risk_level: str = "low"  # Post-MVP
