@@ -2,11 +2,11 @@
 
 OS="$(uname -s 2>/dev/null || echo Windows)"
 case "$OS" in
-    Linux*)     PLATFORM="linux";   PY_CMD="python3"; ACTIVATE_PATH="venv/bin/activate";;
-    Darwin*)    PLATFORM="mac";     PY_CMD="python3"; ACTIVATE_PATH="venv/bin/activate";;
-    CYGWIN*|MINGW*|MSYS*|Windows*)
+    (Linux*)     PLATFORM="linux";   PY_CMD="python3"; ACTIVATE_PATH="venv/bin/activate";;
+    (Darwin*)    PLATFORM="mac";     PY_CMD="python3"; ACTIVATE_PATH="venv/bin/activate";;
+    (CYGWIN*|MINGW*|MSYS*|Windows*)
                 PLATFORM="windows"; PY_CMD="py";  ACTIVATE_PATH="venv/Scripts/activate";;
-    *)          PLATFORM="unknown"; PY_CMD="py";  ACTIVATE_PATH="venv/bin/activate";;
+    (*)          PLATFORM="unknown"; PY_CMD="py";  ACTIVATE_PATH="venv/bin/activate";;
 esac
 
 cd backend
