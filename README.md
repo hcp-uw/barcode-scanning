@@ -27,3 +27,7 @@ To run the frontend run the following command from the frontend folder:
 ```bash
 npm start
 ```
+To run the frontend locally in Web mode:
+```bash
+npm run web
+```
