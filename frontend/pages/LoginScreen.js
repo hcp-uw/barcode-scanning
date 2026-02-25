@@ -1,6 +1,6 @@
 import { View, Button, Text, StyleSheet } from "react-native";
 
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginScreen() {
   const { handleSignInWithGoogle, loading } = useAuth();

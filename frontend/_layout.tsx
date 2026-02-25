@@ -1,6 +1,6 @@
 import { ActivityIndicator, View } from "react-native";
 import { useAuth } from "./contexts/AuthContext";
-import LoginScreen from "./LoginScreen";
+import LoginScreen from "./pages/LoginScreen";
 
 export function AppLayout() {
   const { currentUser, loading } = useAuth();
