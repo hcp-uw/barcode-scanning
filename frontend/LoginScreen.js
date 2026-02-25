@@ -1,36 +1,20 @@
 import { View, Button, Text, StyleSheet, Alert } from "react-native";
-import { useEffect, useState } from "react";
-import * as WebBrowser from "expo-web-browser";
-import * as Google from "expo-auth-session/providers/google";
-import { makeRedirectUri, ResponseType } from "expo-auth-session";
 
-import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import { useAuth } from "./contexts/AuthContext";
 
-WebBrowser.maybeCompleteAuthSession();
-
 export default function LoginScreen() {
-  const auth = useAuth();
+  const { handleSignInWithGoogle, loading } = useAuth();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Barcode Scanning App</Text>
-      
-      {user ? (
-        <View style={styles.userInfo}>
-          <Text style={styles.welcomeText}>Welcome!</Text>
-          <Text style={styles.emailText}>{user.email}</Text>
-        </View>
-      ) : (
-        <>
-          <Text style={styles.subtitle}>Sign in to continue</Text>
-          <Button 
-            title={loading ? "Signing in..." : "Sign in with Google"} 
-            onPress={auth.handleSignInWithGoogle}
-            disabled={!request || loading}
-          />
-        </>
-      )}
+      <>
+        <Text style={styles.subtitle}>Sign in to continue</Text>
+        <Button 
+          title={loading ? "Signing in..." : "Sign in with Google"} 
+          onPress={handleSignInWithGoogle}
+          disabled={loading}
+        />
+      </>
     </View>
   );
 }

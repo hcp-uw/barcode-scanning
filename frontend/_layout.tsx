@@ -1,18 +1,24 @@
-import AuthProvider, { useAuth } from "./contexts/AuthContext";
-import { Stack } from "expo-router";
+import { ActivityIndicator, View } from "react-native";
+import { useAuth } from "./contexts/AuthContext";
+import LoginScreen from "./LoginScreen";
 
-export function AppLayout () {
-    const { currentUser } = useAuth();
+export function AppLayout() {
+  const { currentUser, loading } = useAuth();
+
+  if (loading) {
     return (
-      <Stack>
-      <Stack.Protected guard={currentUser === null}>
-        <Stack.Screen name="LoginScreen" />
-      </Stack.Protected>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
-      <Stack.Protected guard={currentUser !== null}>
-        <Stack.Screen name="private" />
-      </Stack.Protected>
-      {/* Expo Router includes all routes by default. Adding Stack.Protected creates exceptions for these screens. */}
-    </Stack>
-    )
+  if (currentUser === null) {
+    return <LoginScreen />;
+  }
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    </View>
+  );
 }
