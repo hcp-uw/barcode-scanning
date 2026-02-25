@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import product, user, allergen
+from firebase.firebase import get_current_firebase_user, get_current_firebase_uid, db
+from fastapi import Header
 
 app = FastAPI(title="Barcode Scanner API")
 
