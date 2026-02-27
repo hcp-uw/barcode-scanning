@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User } from 'firebase/auth';
 import { auth } from "../firebase";
+import { Alert } from "react-native";
 
 type AuthContext = {
   currentUser: User | null;
@@ -31,6 +32,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       // currentUser will be updated by onAuthStateChanged
     } catch (error) {
       console.error("Create user error:", error);
+      Alert.alert("Error", "Failed to create user");
     }
   }
 
@@ -40,6 +42,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       // currentUser will be updated by onAuthStateChanged
     } catch (error) {
       console.error("Sign in error:", error);
+      Alert.alert("Error", "Failed to sign in");
     }
   }
 
@@ -49,6 +52,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       // currentUser will be updated by onAuthStateChanged
     } catch (error) {
       console.error("Sign out error:", error);
+      Alert.alert("Error", "Failed to sign out");
     }
   }
   
