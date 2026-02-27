@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
-import { auth, googleProvider } from "../firebase";
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User } from 'firebase/auth';
+import { auth } from "../firebase";
 
 type AuthContext = {
   currentUser: User | null;
   loading: boolean;
-  handleSignInWithGoogle: () => Promise<void>;
+  handleCreateUser: (email: string, password: string) => Promise<void>;
+  handleSignIn: (email: string, password: string) => Promise<void>;
   handleSignOut: () => Promise<void>;
 }
 
@@ -24,9 +25,18 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     return unsubscribe;
   }, []);
 
-  async function handleSignInWithGoogle() {
+  async function handleCreateUser(email: string, password: string) {
     try {
-      await signInWithPopup(auth, googleProvider);
+      await createUserWithEmailAndPassword(auth, email, password);
+      // currentUser will be updated by onAuthStateChanged
+    } catch (error) {
+      console.error("Create user error:", error);
+    }
+  }
+
+  async function handleSignIn(email: string, password: string) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       // currentUser will be updated by onAuthStateChanged
     } catch (error) {
       console.error("Sign in error:", error);
@@ -43,7 +53,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   }
   
   return (
-    <AuthContext.Provider value={{ currentUser, loading, handleSignInWithGoogle, handleSignOut }}>
+    <AuthContext.Provider value={{ currentUser, loading, handleCreateUser, handleSignIn, handleSignOut }}>
       {children}
     </AuthContext.Provider>
   );
